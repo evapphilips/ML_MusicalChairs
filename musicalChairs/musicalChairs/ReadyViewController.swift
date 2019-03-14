@@ -14,23 +14,20 @@ struct playerData {
     var playerColor: [Int]
     var playerStatus: Bool
 }
-var players: [Struct];
+// var players: [Struct];
 
 
-class ReadyViewController: UIViewController, MultipeerServiceDelegate{
+class ReadyViewController: UIViewController {
+    
+    // player variables
+    var playerCount: Int = 0;
+    let playerTotal: Int = 3;
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
-        <#code#>
-    }
-    
-    func receivedMsg(manager: MultipeerService, msg: String) {
-        <#code#>
-    }
     
 
     

@@ -9,13 +9,24 @@
 import UIKit
 
 class CountdownViewController: UIViewController {
-
+    
+    // set variables
+    var countDown: Int = 5;
+    
+    // set labels
+    @IBOutlet weak var countDownLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        // display count down number
+        countDownLabel.text = String(countDown)
+        
+    }
 
     /*
     // MARK: - Navigation

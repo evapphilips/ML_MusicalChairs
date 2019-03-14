@@ -9,9 +9,15 @@
 import UIKit
 
 class GameViewController: UIViewController {
+    
+    // user name color symbol
+    @IBOutlet weak var playerSymbolView: UIView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        playerSymbolView.layer.cornerRadius = 5;
 
         // Do any additional setup after loading the view.
     }
