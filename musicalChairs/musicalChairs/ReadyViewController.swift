@@ -8,11 +8,6 @@
 
 import UIKit
 
-////////////////////////////////////////////////////////////////////
-// NOTE: Update to unique name.
-// Service type must be a unique string, at most 15 characters long
-// and can contain only ASCII lowercase letters, numbers and hyphens.
-let ServiceType = "musical-chairs"
 
 //// Global Variables
 //struct playerData {
@@ -23,18 +18,28 @@ let ServiceType = "musical-chairs"
 //var players: [playerData] = []
 
 
+<<<<<<< HEAD
 class ReadyViewController: UIViewController, MultipeerServiceDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
     // attach collection view controller
     @IBOutlet weak var collectionView: UICollectionView!
 
 
+=======
+class ReadyViewController: UIViewController {
+>>>>>>> f82603b20a10a838e31eb31b0216890dda0d3b99
     // Popup for entering username.
     var alert : UIAlertController!
-    // Service for handling P2P communication.
-    var multipeerService: MultipeerService?
     // Display name.
     var username = ""
+    
+    
+//    // Popup for entering username.
+//    var alert : UIAlertController!
+//    // Service for handling P2P communication.
+//    var multipeerService: MultipeerService?
+//    // Display name.
+//    var username = ""
     
 //    var players: [String] = []
 
@@ -45,8 +50,11 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate, UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
  //       let vc = GameViewController(nibName: "GameViewController", bundle: nil)
  //       vc.delegate = self
+=======
+>>>>>>> f82603b20a10a838e31eb31b0216890dda0d3b99
         // Prompt user to input username and start P2P communication.
 //        restart()
     }
@@ -72,13 +80,7 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate, UICollect
                 // Save username and set to title.
                 self.username = name
                 self.navigationItem.title = name
-                
-                ///////////////////////////////////////////////////////
-                // NOTE: Start P2P.
-                self.startMultipeerService(displayName: name)
-                ///////////////////////////////////////////////////////
-//                self.players.insert(self.username, at: 0)
-                
+            
             }
         })
         action.isEnabled = false
@@ -93,13 +95,7 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate, UICollect
         alert.actions[0].isEnabled = sender.text!.count > 0
     }
 
-    // Start multipeer service with display name.
-    func startMultipeerService(displayName: String) {
-        self.multipeerService = nil
-        self.multipeerService = MultipeerService(dispayName: displayName)
-        self.multipeerService?.delegate = self
-        
-    }
+
     
     // Dismisses keyboard when done is pressed.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -107,6 +103,7 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate, UICollect
         return false
     }
 
+<<<<<<< HEAD
     
     // peer to peer protocol
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
@@ -138,6 +135,9 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate, UICollect
     
     }
     
+=======
+
+>>>>>>> f82603b20a10a838e31eb31b0216890dda0d3b99
 
 }
 
