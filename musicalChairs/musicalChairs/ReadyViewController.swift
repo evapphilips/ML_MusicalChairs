@@ -23,8 +23,12 @@ let ServiceType = "musical-chairs"
 //var players: [playerData] = []
 
 
-class ReadyViewController: UIViewController, MultipeerServiceDelegate {
+class ReadyViewController: UIViewController, MultipeerServiceDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    // attach collection view controller
+    @IBOutlet weak var collectionView: UICollectionView!
+
+
     // Popup for entering username.
     var alert : UIAlertController!
     // Service for handling P2P communication.
@@ -41,8 +45,8 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let vc = GameViewController(nibName: "GameViewController", bundle: nil)
-        vc.delegate = self
+ //       let vc = GameViewController(nibName: "GameViewController", bundle: nil)
+ //       vc.delegate = self
         // Prompt user to input username and start P2P communication.
 //        restart()
     }
@@ -104,7 +108,7 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate {
     }
 
     
-    
+    // peer to peer protocol
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
         
         DispatchQueue.main.async {
@@ -118,6 +122,22 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate {
         DispatchQueue.main.async {
         }
     }
+    
+    // collection view protocol
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextCollectionViewCell", for: indexPath) as! TextCollectionViewCell
+        
+        cell.collectionViewCellText.text = "hi"
+        
+        return cell
+    
+    }
+    
 
 }
 
