@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50A218BF223BEF5500C212D6 /* MultipeerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A218BE223BEF5500C212D6 /* MultipeerService.swift */; };
 		D9A306FC223AF8A5004ECC05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A306FB223AF8A5004ECC05 /* AppDelegate.swift */; };
 		D9A306FE223AF8A5004ECC05 /* ReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A306FD223AF8A5004ECC05 /* ReadyViewController.swift */; };
 		D9A30701223AF8A5004ECC05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9A306FF223AF8A5004ECC05 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		50A218BE223BEF5500C212D6 /* MultipeerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerService.swift; sourceTree = "<group>"; };
 		D9A306F8223AF8A5004ECC05 /* musicalChairs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = musicalChairs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A306FB223AF8A5004ECC05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9A306FD223AF8A5004ECC05 /* ReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				D9A306FD223AF8A5004ECC05 /* ReadyViewController.swift */,
 				D9A3070D223AF95B004ECC05 /* CountdownViewController.swift */,
 				D9A3070F223AF969004ECC05 /* GameViewController.swift */,
+				50A218BE223BEF5500C212D6 /* MultipeerService.swift */,
 				D9A306FF223AF8A5004ECC05 /* Main.storyboard */,
 				D9A30702223AF8A8004ECC05 /* Assets.xcassets */,
 				D9A30704223AF8A8004ECC05 /* LaunchScreen.storyboard */,
@@ -143,6 +146,7 @@
 			files = (
 				D9A30710223AF969004ECC05 /* GameViewController.swift in Sources */,
 				D9A3070E223AF95B004ECC05 /* CountdownViewController.swift in Sources */,
+				50A218BF223BEF5500C212D6 /* MultipeerService.swift in Sources */,
 				D9A306FE223AF8A5004ECC05 /* ReadyViewController.swift in Sources */,
 				D9A306FC223AF8A5004ECC05 /* AppDelegate.swift in Sources */,
 			);
