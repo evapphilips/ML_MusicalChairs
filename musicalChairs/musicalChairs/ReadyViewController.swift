@@ -28,10 +28,12 @@ class ReadyViewController: UIViewController, UIScrollViewDelegate {
     
     
     // set up scroll view for instructions
-    @IBOutlet weak var instructionsScrollView: UIScrollView!
+    let instructionsScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 320, height: 400))
     // set up page control
-    @IBOutlet weak var pageControl: UIPageControl!
-    var colors:[UIColor] = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
+     var pageControl : UIPageControl = UIPageControl(frame:CGRect(x: 50, y: 400, width: 200, height: 50))
+    // instructions view variables
+    //var colors:[UIColor] = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
+    var labels: [String] = ["waiting for other player, swipe to view instructions", "when the count finishes, occupy a circle as fast as you can", "practice by tapping on this circle"]
     var frame: CGRect = CGRect(x:0, y:0, width:0, height:0)
     
     
@@ -56,19 +58,28 @@ class ReadyViewController: UIViewController, UIScrollViewDelegate {
 //        restart()
         
         // instructions carousel
-        configurePageControl()
+        instructionsScrollView.center = self.view.center
+        instructionsScrollView.backgroundColor = .gray
         instructionsScrollView.delegate = self
-        instructionsScrollView.isPagingEnabled = true
-        instructionsScrollView.layer.cornerRadius = 10;
-        for index in 0..<4 {
+        self.view.addSubview(instructionsScrollView)
+        configurePageControl()
+        for index in 0..<3 {
     
             frame.origin.x = self.instructionsScrollView.frame.size.width * CGFloat(index)
             frame.size = self.instructionsScrollView.frame.size
             
-            let subView = UIView(frame: frame)
-            subView.backgroundColor = colors[index]
-            self.instructionsScrollView.addSubview(subView)
+            let labelSubView = UILabel(frame: frame)
+            labelSubView.text = labels[index]
+            self.instructionsScrollView.addSubview(labelSubView)
+            
+//            let subView = UIView(frame: frame)
+//            subView.backgroundColor = colors[index]
+//            self.instructionsScrollView.addSubview(subView)
         }
+        
+        instructionsScrollView.isPagingEnabled = true
+        instructionsScrollView.showsHorizontalScrollIndicator = false
+        instructionsScrollView.layer.cornerRadius = 10;
         self.instructionsScrollView.contentSize = CGSize(width:self.instructionsScrollView.frame.size.width * 4,height: self.instructionsScrollView.frame.size.height)
         pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
         
@@ -121,11 +132,13 @@ class ReadyViewController: UIViewController, UIScrollViewDelegate {
     // Carousel intrstructions
     func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
-        self.pageControl.numberOfPages = 4
+        self.pageControl.center = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height/2 + 160)
+        self.pageControl.numberOfPages = 3
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = UIColor.red
         self.pageControl.pageIndicatorTintColor = UIColor.black
         self.pageControl.currentPageIndicatorTintColor = UIColor.white
+        self.view.addSubview(pageControl)
     }
     // MARK : TO CHANGE WHILE CLICKING ON PAGE CONTROL
     @objc func changePage(sender: AnyObject) -> () {
