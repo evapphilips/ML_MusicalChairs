@@ -9,8 +9,9 @@
 import UIKit
 // player variables
 var connectedPlayers: Int = 0
-var playerCount: Int = 0
+var playerCount = connectedPlayers + 1
 let playerTotal: Int = 3
+var state: Bool = false
 
 ////////////////////////////////////////////////////////////////////
 // NOTE: Update to unique name.
@@ -18,8 +19,14 @@ let playerTotal: Int = 3
 // and can contain only ASCII lowercase letters, numbers and hyphens.
 let ServiceType = "musical-chairs"
 
+protocol GameViewControllerDelegate: class {
+    func startService()
+}
 
 class GameViewController: UIViewController, MultipeerServiceDelegate {
+    weak var delegate: GameViewControllerDelegate?
+    var startService: (() -> Void)?
+    
     @IBOutlet weak var testButton: UIButton!
     
     // Service for handling P2P communication.
@@ -37,13 +44,13 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         self.multipeerService = nil
         self.multipeerService = MultipeerService(dispayName: displayName)
         self.multipeerService?.delegate = self
-        
+        print("started")
     }
     
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
         DispatchQueue.main.async {
             connectedPlayers = connectedDevices.count
-            playerCount = connectedPlayers+1
+//            playerCount = connectedPlayers+1
             print("player count:"+"\(playerCount)")
         }
     }
@@ -63,13 +70,14 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         super.viewDidLoad()
 
         if let name = playerName {
-            // Start P2P.
-            print("here")
-            self.startMultipeerService(displayName: name)
+            print(name)
+//            // Start P2P.
+////            print("here")
+//            self.startMultipeerService(displayName: name)
         }
-        
         playerSymbolView.layer.cornerRadius = 5;
-
     }
 
 }
+
+

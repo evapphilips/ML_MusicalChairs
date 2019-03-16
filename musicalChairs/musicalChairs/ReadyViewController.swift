@@ -10,22 +10,32 @@ import UIKit
 
 
 
-class ReadyViewController: UIViewController {
+class ReadyViewController: UIViewController, GameViewControllerDelegate {
+    func startService() {
+        
+    }
+    
+    let gameViewController = GameViewController()
+    
     // Popup for entering username.
     var alert : UIAlertController!
     // Display name.
-    var username = ""
+    var username: String?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Prompt user to input username and start P2P communication.
-//        restart()
+        gameViewController.delegate = self
+        if let name = self.username {
+            gameViewController.startMultipeerService(displayName: name)   //not starting
+        }
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Prompt user to input username
         restart()
-
+        
     }
     
     // Show popup for entering username, P2P servic will start when name entered.
@@ -43,19 +53,29 @@ class ReadyViewController: UIViewController {
             if let name = self.alert.textFields?.first?.text {
                 // Save username and set to title.
                 self.username = name
-//                self.navigationItem.title = name
+                // self.navigationItem.title = name
+                print("hello")
             }
+            print("connected players:"+"\(connectedPlayers)")
+            print("player count:"+"\(playerCount)")
             
             self.performSegue(withIdentifier: "PlayerNameSegue", sender: self)
+
+            //if all players connected, open GameViewController
+//            if playerCount == 2 {
+//                print("hi")
+//                self.performSegue(withIdentifier: "PlayerNameSegue", sender: self)
+//                // Instantiate GameViewController
+//                //                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                //                guard let gameVC = storyboard.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
+//                //                    print("Error instantiating GameViewController" )
+//                //                    return
+//                //                }
+//                //                // Present GameViewController.
+//                //                self.present(gameVC, animated: false, completion: nil)
+//            }
             
-            // Instantiate GameViewController
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let gameVC = storyboard.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
-                print("Error instantiating GameViewController" )
-                return
-            }
-            // Present GameViewController.
-            self.present(gameVC, animated: false, completion: nil)
+            
         })
         action.isEnabled = false
         alert.addAction(action)
@@ -79,7 +99,7 @@ class ReadyViewController: UIViewController {
         let vc = segue.destination as! GameViewController
         vc.playerName = self.username
     }
-
+    
     
 }
 
