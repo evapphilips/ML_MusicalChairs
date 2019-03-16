@@ -21,6 +21,9 @@ let ServiceType = "musical-chairs"
 
 class GameViewController: UIViewController, MultipeerServiceDelegate {
     @IBOutlet weak var testButton: UIButton!
+    @IBOutlet weak var playerSymbolView: UIView!
+    @IBOutlet weak var playerNameLabel: UILabel!
+    
     
     // Service for handling P2P communication.
     var multipeerService: MultipeerService?
@@ -30,14 +33,29 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
 //    @IBAction func handelTestButton(_ sender: Any) {
 //
 //    }
-    
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        if let name = playerName {
+            // Start P2P.
+            print(name)
+            self.startMultipeerService(displayName: name)
+            playerNameLabel.text = name;
+        }
+        
+        playerSymbolView.layer.cornerRadius = playerSymbolView.frame.size.width/2
+        playerSymbolView.clipsToBounds = true
+        playerSymbolView.layer.backgroundColor = UIColor.red.cgColor
+
+    }
+    
+    
     // Start multipeer service with display name.
     func startMultipeerService(displayName: String) {
         self.multipeerService = nil
         self.multipeerService = MultipeerService(dispayName: displayName)
         self.multipeerService?.delegate = self
-        
     }
     
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
@@ -53,23 +71,4 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             print("hi")
         }
     }
-    
-    
-    // user name color symbol
-    @IBOutlet weak var playerSymbolView: UIView!
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        if let name = playerName {
-            // Start P2P.
-            print("here")
-            self.startMultipeerService(displayName: name)
-        }
-        
-        playerSymbolView.layer.cornerRadius = 5;
-
-    }
-
 }

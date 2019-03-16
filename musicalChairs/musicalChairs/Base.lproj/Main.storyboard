@@ -121,35 +121,48 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhn-w3-rnM">
-                                <rect key="frame" x="73" y="626" width="76" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uhn-w3-rnM">
+                                <rect key="frame" x="73" y="619" width="76" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="76" id="mjr-X9-BiO"/>
+                                    <constraint firstAttribute="height" constant="21" id="vhf-Fd-lyx"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVv-f5-Q1B">
-                                <rect key="frame" x="16" y="619" width="44" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bVv-f5-Q1B">
+                                <rect key="frame" x="16" y="611" width="36" height="36"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="9EW-tV-AkY"/>
+                                    <constraint firstAttribute="width" constant="36" id="D70-3b-8iN"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uap-7M-YmX">
-                                <rect key="frame" x="154" y="239" width="77" height="54"/>
+                                <rect key="frame" x="152" y="225" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fvj-R6-bB3" firstAttribute="bottom" secondItem="bVv-f5-Q1B" secondAttribute="bottom" constant="20" id="Ea0-0H-hrs"/>
+                            <constraint firstItem="Uhn-w3-rnM" firstAttribute="leading" secondItem="bVv-f5-Q1B" secondAttribute="trailing" constant="21" id="TJE-xs-ZFQ"/>
+                            <constraint firstItem="fvj-R6-bB3" firstAttribute="bottom" secondItem="Uhn-w3-rnM" secondAttribute="bottom" constant="27" id="dqQ-KH-4n6"/>
+                            <constraint firstItem="bVv-f5-Q1B" firstAttribute="leading" secondItem="fvj-R6-bB3" secondAttribute="leading" constant="16" id="wi6-u5-zi8"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="fvj-R6-bB3"/>
                     </view>
                     <connections>
+                        <outlet property="playerNameLabel" destination="Uhn-w3-rnM" id="jUB-a3-XDx"/>
                         <outlet property="playerSymbolView" destination="bVv-f5-Q1B" id="ccu-5K-OGn"/>
                         <outlet property="testButton" destination="Uap-7M-YmX" id="Tg8-GR-dof"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NFl-gs-WPx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="887" y="134"/>
+            <point key="canvasLocation" x="885.60000000000002" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>
