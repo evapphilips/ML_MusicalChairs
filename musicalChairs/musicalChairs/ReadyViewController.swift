@@ -9,34 +9,12 @@
 import UIKit
 
 
-//// Global Variables
-//struct playerData {
-//    var playerName: String
-//    var playerColor: [Int]
-//    var playerStatus: Bool
-//}
-//var players: [playerData] = []
-
 
 class ReadyViewController: UIViewController {
     // Popup for entering username.
     var alert : UIAlertController!
     // Display name.
     var username = ""
-    
-    
-//    // Popup for entering username.
-//    var alert : UIAlertController!
-//    // Service for handling P2P communication.
-//    var multipeerService: MultipeerService?
-//    // Display name.
-//    var username = ""
-    
-//    var players: [String] = []
-
-    // player variables
-    var playerCount: Int = 0;
-    let playerTotal: Int = 3;
     
     
     override func viewDidLoad() {
@@ -65,9 +43,19 @@ class ReadyViewController: UIViewController {
             if let name = self.alert.textFields?.first?.text {
                 // Save username and set to title.
                 self.username = name
-                self.navigationItem.title = name
-            
+//                self.navigationItem.title = name
             }
+            
+            self.performSegue(withIdentifier: "PlayerNameSegue", sender: self)
+            
+            // Instantiate GameViewController
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let gameVC = storyboard.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
+                print("Error instantiating GameViewController" )
+                return
+            }
+            // Present GameViewController.
+            self.present(gameVC, animated: false, completion: nil)
         })
         action.isEnabled = false
         alert.addAction(action)
@@ -80,16 +68,18 @@ class ReadyViewController: UIViewController {
     @objc func alertTextFieldDidChange(_ sender: UITextField) {
         alert.actions[0].isEnabled = sender.text!.count > 0
     }
-
-
     
     // Dismisses keyboard when done is pressed.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return false
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! GameViewController
+        vc.playerName = self.username
+    }
 
-
-
+    
 }
 

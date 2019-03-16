@@ -64,6 +64,9 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <segue destination="7zL-sJ-c3E" kind="presentation" identifier="PlayerNameSegue" id="iMs-dl-ZVJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -101,12 +104,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GfI-Tl-6yH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="938" y="134"/>
+            <point key="canvasLocation" x="905" y="-564"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="E1y-Vi-kYg">
             <objects>
-                <viewController storyboardIdentifier="GameViewController" id="7zL-sJ-c3E" customClass="GameViewController" customModule="musicalChairs" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7zL-sJ-c3E" customClass="GameViewController" customModule="musicalChairs" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fRu-DX-xWq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -141,11 +144,12 @@
                     </view>
                     <connections>
                         <outlet property="playerSymbolView" destination="bVv-f5-Q1B" id="ccu-5K-OGn"/>
+                        <outlet property="testButton" destination="Uap-7M-YmX" id="Tg8-GR-dof"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NFl-gs-WPx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1805.5999999999999" y="133.5832083958021"/>
+            <point key="canvasLocation" x="887" y="134"/>
         </scene>
     </scenes>
 </document>

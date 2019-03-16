@@ -7,6 +7,10 @@
 //
 
 import UIKit
+// player variables
+var connectedPlayers: Int = 0
+var playerCount: Int = 0
+let playerTotal: Int = 3
 
 ////////////////////////////////////////////////////////////////////
 // NOTE: Update to unique name.
@@ -16,11 +20,16 @@ let ServiceType = "musical-chairs"
 
 
 class GameViewController: UIViewController, MultipeerServiceDelegate {
+    @IBOutlet weak var testButton: UIButton!
     
     // Service for handling P2P communication.
     var multipeerService: MultipeerService?
+    var playerName: String?
     
-
+    
+//    @IBAction func handelTestButton(_ sender: Any) {
+//
+//    }
     
 
     // Start multipeer service with display name.
@@ -33,8 +42,9 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
         DispatchQueue.main.async {
-            print("\(connectedDevices)")
-            
+            connectedPlayers = connectedDevices.count
+            playerCount = connectedPlayers+1
+            print("player count:"+"\(playerCount)")
         }
     }
     
@@ -51,25 +61,15 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        ///////////////////////////////////////////////////////
-        // NOTE: Start P2P.
-        self.startMultipeerService(displayName: "ada")
-        ///////////////////////////////////////////////////////
+
+        if let name = playerName {
+            // Start P2P.
+            print("here")
+            self.startMultipeerService(displayName: name)
+        }
         
         playerSymbolView.layer.cornerRadius = 5;
 
-        // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
