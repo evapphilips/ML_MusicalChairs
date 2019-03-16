@@ -77,4 +77,5 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+.xcuserstate
 .DS_Store
