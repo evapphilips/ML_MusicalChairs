@@ -32,8 +32,8 @@ class ReadyViewController: UIViewController, UIScrollViewDelegate {
     // set up page control
      var pageControl : UIPageControl = UIPageControl(frame:CGRect(x: 50, y: 400, width: 200, height: 50))
     // instructions view variables
-    //var colors:[UIColor] = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
-    var labels: [String] = ["waiting for other player, swipe to view instructions", "when the count finishes, occupy a circle as fast as you can", "practice by tapping on this circle"]
+    var colors:[UIColor] = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
+    //var labels: [String] = ["waiting for other player, swipe to view instructions", "when the count finishes, occupy a circle as fast as you can", "practice by tapping on this circle"]
     var frame: CGRect = CGRect(x:0, y:0, width:0, height:0)
     
     
@@ -68,13 +68,13 @@ class ReadyViewController: UIViewController, UIScrollViewDelegate {
             frame.origin.x = self.instructionsScrollView.frame.size.width * CGFloat(index)
             frame.size = self.instructionsScrollView.frame.size
             
-            let labelSubView = UILabel(frame: frame)
-            labelSubView.text = labels[index]
-            self.instructionsScrollView.addSubview(labelSubView)
+//            let labelSubView = UILabel(frame: frame)
+//            labelSubView.text = labels[index]
+//            self.instructionsScrollView.addSubview(labelSubView)
             
-//            let subView = UIView(frame: frame)
-//            subView.backgroundColor = colors[index]
-//            self.instructionsScrollView.addSubview(subView)
+            let subView = UIView(frame: frame)
+            subView.backgroundColor = colors[index]
+            self.instructionsScrollView.addSubview(subView)
         }
         
         instructionsScrollView.isPagingEnabled = true
