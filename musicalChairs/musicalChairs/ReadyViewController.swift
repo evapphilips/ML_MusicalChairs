@@ -17,11 +17,17 @@ class ReadyViewController: UIViewController {
     var username = ""
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Prompt user to input username and start P2P communication.
 //        restart()
+        
+        // set up collection view
+        
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         restart()
@@ -46,16 +52,16 @@ class ReadyViewController: UIViewController {
 //                self.navigationItem.title = name
             }
             
-            self.performSegue(withIdentifier: "PlayerNameSegue", sender: self)
-            
-            // Instantiate GameViewController
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            guard let gameVC = storyboard.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
-                print("Error instantiating GameViewController" )
-                return
-            }
-            // Present GameViewController.
-            self.present(gameVC, animated: false, completion: nil)
+//            self.performSegue(withIdentifier: "PlayerNameSegue", sender: self)
+//
+//            // Instantiate GameViewController
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            guard let gameVC = storyboard.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
+//                print("Error instantiating GameViewController" )
+//                return
+//            }
+//            // Present GameViewController.
+//            self.present(gameVC, animated: false, completion: nil)
         })
         action.isEnabled = false
         alert.addAction(action)
@@ -79,6 +85,7 @@ class ReadyViewController: UIViewController {
         let vc = segue.destination as! GameViewController
         vc.playerName = self.username
     }
+    
 
     
 }

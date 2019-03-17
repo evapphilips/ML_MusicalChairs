@@ -11,13 +11,32 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class IntroCollectionViewController: UICollectionViewController {
+    
+    // deifine snap layout
+    let flowLayout = IntroCollectionViewFlowLayout()
+    
+    // define UI label for title
+    var titleUILabel: UILabel!
+    
+    // define instructions array
+    var instructions: [String] = ["waiting for other players", "object of the game, occupy a bottom as fast as possible", "dont let anyone steal your button", "practice occupying a button by clicking on the circle below"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set title
+        titleUILabel = UILabel(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 40))
+        titleUILabel.textAlignment = .center
+        titleUILabel.text = "Mobile Lab Musical Chairs"
+        self.view.addSubview(titleUILabel)
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
+        // set up collection view
+        guard let introCollectionView = collectionView else { fatalError() }
+        introCollectionView.collectionViewLayout = flowLayout
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
@@ -38,19 +57,28 @@ class IntroCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return 4
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
     
         // Configure the cell
+        cell.contentView.backgroundColor = .white
+        var pageUILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 350))
+        pageUILabel.textAlignment = .center
+        pageUILabel.text = instructions[indexPath.item]
+        cell.addSubview(pageUILabel)
+        print(indexPath)
+        print(indexPath.item)
+        
+        
     
         return cell
     }
