@@ -19,7 +19,7 @@ class IntroCollectionViewController: UICollectionViewController {
     var titleUILabel: UILabel!
     
     // define instructions array
-    var instructions: [String] = ["waiting for other players", "object of the game, occupy a bottom as fast as possible", "dont let anyone steal your button", "practice occupying a button by clicking on the circle below"]
+    var instructions: [String] = ["Waiting for other players. Swipe to view the instructions", "The object of the game is to occupy a circle as fast as possible.", "But dont let anyone steal your circle before the time is up.", "Practice occupying a circle by clicking on the circle below."]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,20 +63,36 @@ class IntroCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 4
+        return instructions.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
     
+        
         // Configure the cell
         cell.contentView.backgroundColor = .white
-        var pageUILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 350))
+        // add instructions in each collection view page
+        let pageUILabel = UILabel(frame: CGRect(x: 25, y: 25, width: 200, height: 300))
         pageUILabel.textAlignment = .center
-        pageUILabel.text = instructions[indexPath.item]
+        pageUILabel.lineBreakMode = .byWordWrapping
+        pageUILabel.numberOfLines = 4
+        pageUILabel.text = instructions[indexPath.row]
         cell.addSubview(pageUILabel)
-        print(indexPath)
-        print(indexPath.item)
+//        if(indexPath.row == 0){
+//        pageUILabel.text = instructions[0]
+//        cell.addSubview(pageUILabel)
+//        }
+//        if(indexPath.row == 1){
+//            pageUILabel.text = instructions[1]
+//            cell.addSubview(pageUILabel)
+//        }
+//        if(indexPath.row == 3){
+//            pageUILabel.text = instructions[3]
+//            cell.addSubview(pageUILabel)
+//        }
+        
+        
         
         
     
