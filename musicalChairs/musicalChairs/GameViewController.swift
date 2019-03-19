@@ -10,8 +10,10 @@ import UIKit
 // player variables
 var connectedPlayers: Int = 0
 var playerCount: Int = 0
-let playerTotal: Int = 3
-var status: Bool = false;
+let playerTotal: Int = 4
+var playerStatus: Bool = false
+let buttonTotal: Int = 3   //button Total < playerTotal
+var buttonCount: Int = 0
 
 ////////////////////////////////////////////////////////////////////
 // NOTE: Update to unique name.
@@ -26,8 +28,13 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     @IBOutlet weak var playerNameLabel: UILabel!
     @IBOutlet var buttons : [UIButton]!
     
+    @IBOutlet weak var buttonCountLabel: UILabel!
+    
     // Popup for entering username.
     var alert : UIAlertController!
+    
+    // Popup for entering username.
+    var gameOverAlert:UIAlertController!
     
     // Service for handling P2P communication.
     var multipeerService: MultipeerService?
@@ -43,9 +50,9 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         self.applyRoundCorner(playerSymbolView)
         playerSymbolView.layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
         
-        self.applyRoundCorner(testButton)
-        testButton.layer.borderColor = UIColor.black.cgColor
-        testButton.layer.borderWidth = 2
+//        self.applyRoundCorner(testButton)
+//        testButton.layer.borderColor = UIColor.black.cgColor
+//        testButton.layer.borderWidth = 0
         
         buttons.forEach {
             self.applyRoundCorner($0)
@@ -59,12 +66,12 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             //self.startMultipeerService(displayName: name)
             //playerNameLabel.text = name;
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         restart()
-        
     }
     
     @IBAction func handleTestButton(_ sender: Any) {
@@ -75,17 +82,33 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     
     
     @IBAction func buttonsTapped(_ sender: UIButton){
+        //set the button title and color to this player's name and color
         let index = buttons.index(of: sender)!
         buttons[index].layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
         buttons[index].setTitle(playerName, for: .normal)
         buttons[index].setTitleColor(.black, for: .normal)
+        
+        //send message to peers
+        multipeerService?.send(msg: "\(index),\(playerName!),\(r),\(g),\(b)")
+        
+        //disable all the buttons for this player
         buttons.forEach{
             $0.isEnabled = false
         }
-        //get index of button tapped
-        print("index:"+"\(index)")
         
-        multipeerService?.send(msg: "\(index),\(playerName!),\(r),\(g),\(b)")
+        //player won
+        playerStatus = true
+        //print("i won")
+        
+        //increment occupied buttons
+        buttonCount = buttonCount + 1
+        //debug: printing buttonCount on buttonCountLabel
+        self.buttonCountLabel.text = ("\(buttonCount) buttons occupied")
+        
+        //present gameOverAlert if this player occupies the last button
+        if buttonCount == buttonTotal {
+            gameover()
+        }
     }
     
     // Start multipeer service with display name.
@@ -105,25 +128,31 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     
     func receivedMsg(manager: MultipeerService, msg: String) {
         DispatchQueue.main.async {
+            //split msg into msgArray [index, playerName, r, g, b]
             let msgArray = msg.components(separatedBy: ",")
-            let name = msgArray[1]
             if let i = Int(msgArray[0]){
-                self.buttons[i].setTitle(name, for: .normal)
+                //disable occupied buttons and set title and color from received msg
                 self.buttons[i].isEnabled = false
+                self.buttons[i].setTitle(msgArray[1], for: .normal)
                 guard let rd = NumberFormatter().number(from: msgArray[2]) else {return}
                 guard let gr = NumberFormatter().number(from: msgArray[3]) else {return}
                 guard let bl = NumberFormatter().number(from: msgArray[4]) else {return}
                 self.buttons[i].layer.backgroundColor = UIColor(red: CGFloat(truncating: rd), green: CGFloat(truncating: gr), blue: CGFloat(truncating: bl), alpha: 1.0).cgColor
             }
+            
+            //increment occupied buttons
+            buttonCount = buttonCount + 1
+            //debug: printing buttonCount on label
+            self.buttonCountLabel.text = ("\(buttonCount) buttons occupied")
+            
+            //present gameOverAlert when all the buttons occupied
+            if buttonCount == buttonTotal {
+                self.gameover()
+            }
         }
     }
     
-    func applyRoundCorner(_ object:AnyObject){
-        object.layer.cornerRadius = object.frame.size.width/2
-        object.layer?.masksToBounds = true
-    }
-    
-    
+    //---------------------------test--------------------------------------
     // Show popup for entering username, P2P servic will start when name entered.
     func restart() {
         print("restart")
@@ -154,14 +183,45 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         alert.actions[0].isEnabled = sender.text!.count > 0
     }
     
+    
     // Dismisses keyboard when done is pressed.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return false
     }
+    //------------------------------test------------------------------------
+
     
+    // Show popup for game result
+    func gameover() {
+        // Create gameover alert popup.
+        if playerStatus == true {
+            gameOverAlert = UIAlertController(title: "Game Over! You Won!", message: nil, preferredStyle: .alert)
+        } else {
+            gameOverAlert = UIAlertController(title: "Game Over! You Lost!", message: nil, preferredStyle: .alert)
+        }
+        
+        // Create action on Restart press, go back to ReadyViewController
+        let action = UIAlertAction(title: "Restart", style: .default, handler: { action in
+            print("restarted")
+        })
+        action.isEnabled = false
+        gameOverAlert.addAction(action)
+        
+        // Show alert popup.
+        self.present(gameOverAlert, animated: true)
+    }
+    
+    
+    func applyRoundCorner(_ object:AnyObject){
+        object.layer.cornerRadius = object.frame.size.width/2
+        object.layer?.masksToBounds = true
+    }
 }
 
+
+
+//generate random CGFloat number for player color
 extension CGFloat {
     static func random() -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UInt32.max)
