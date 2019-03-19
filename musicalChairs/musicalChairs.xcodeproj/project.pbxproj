@@ -17,6 +17,7 @@
 		D9A30710223AF969004ECC05 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A3070F223AF969004ECC05 /* GameViewController.swift */; };
 		D9B31F4C223EB95F00FF1C90 /* IntroCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B31F4B223EB95F00FF1C90 /* IntroCollectionViewController.swift */; };
 		D9B31F4E223EBFB700FF1C90 /* IntroCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9B31F4D223EBFB700FF1C90 /* IntroCollectionViewFlowLayout.swift */; };
+		D9DE994A22405B0300E8B57D /* IntroCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DE994922405B0300E8B57D /* IntroCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		D9A3070F223AF969004ECC05 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		D9B31F4B223EB95F00FF1C90 /* IntroCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroCollectionViewController.swift; sourceTree = "<group>"; };
 		D9B31F4D223EBFB700FF1C90 /* IntroCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		D9DE994922405B0300E8B57D /* IntroCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			children = (
 				D9A306FB223AF8A5004ECC05 /* AppDelegate.swift */,
 				D9B31F4B223EB95F00FF1C90 /* IntroCollectionViewController.swift */,
+				D9DE994922405B0300E8B57D /* IntroCollectionViewCell.swift */,
 				D9A306FD223AF8A5004ECC05 /* ReadyViewController.swift */,
 				D9A3070D223AF95B004ECC05 /* CountdownViewController.swift */,
 				D9A3070F223AF969004ECC05 /* GameViewController.swift */,
@@ -153,6 +156,7 @@
 				D9B31F4E223EBFB700FF1C90 /* IntroCollectionViewFlowLayout.swift in Sources */,
 				D9A30710223AF969004ECC05 /* GameViewController.swift in Sources */,
 				D9A3070E223AF95B004ECC05 /* CountdownViewController.swift in Sources */,
+				D9DE994A22405B0300E8B57D /* IntroCollectionViewCell.swift in Sources */,
 				50A218BF223BEF5500C212D6 /* MultipeerService.swift in Sources */,
 				D9B31F4C223EB95F00FF1C90 /* IntroCollectionViewController.swift in Sources */,
 				D9A306FE223AF8A5004ECC05 /* ReadyViewController.swift in Sources */,

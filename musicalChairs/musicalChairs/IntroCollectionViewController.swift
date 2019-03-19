@@ -20,6 +20,12 @@ class IntroCollectionViewController: UICollectionViewController {
     
     // define instructions array
     var instructions: [String] = ["Waiting for other players. Swipe to view the instructions", "The object of the game is to occupy a circle as fast as possible.", "But dont let anyone steal your circle before the time is up.", "Practice occupying a circle by clicking on the circle below."]
+    
+    // define username for now
+    let username: String = "Eva"
+    
+    //var col = UIColor.white
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,36 +73,51 @@ class IntroCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! IntroCollectionViewCell
     
+        
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! MyCell
+//        cell.myLabel.text = myStrings[indexPath.row]
+//        return cell
         
         // Configure the cell
         cell.contentView.backgroundColor = .white
+        cell.layer.cornerRadius = 10
+        
         // add instructions in each collection view page
-        let pageUILabel = UILabel(frame: CGRect(x: 25, y: 25, width: 200, height: 300))
-        pageUILabel.textAlignment = .center
-        pageUILabel.lineBreakMode = .byWordWrapping
-        pageUILabel.numberOfLines = 4
-        pageUILabel.text = instructions[indexPath.row]
-        cell.addSubview(pageUILabel)
-//        if(indexPath.row == 0){
-//        pageUILabel.text = instructions[0]
-//        cell.addSubview(pageUILabel)
-//        }
-//        if(indexPath.row == 1){
-//            pageUILabel.text = instructions[1]
-//            cell.addSubview(pageUILabel)
-//        }
-//        if(indexPath.row == 3){
-//            pageUILabel.text = instructions[3]
-//            cell.addSubview(pageUILabel)
-//        }
+        if(indexPath.row < 3){  // for the first three pages
+            // set frame for beginning pages
+            cell.pageLabel.frame = CGRect(x: 25, y: 25, width: 200, height: 300)
+            // hide button
+            cell.pageButton.isHidden = true
+            
+        } else{  // for the last page
+            // set frame for last page
+            cell.pageLabel.sizeToFit()
+            // show button
+            cell.pageButton.isHidden = false
+            cell.pageButton.frame = CGRect(x: 75, y: 150, width: 100, height: 100)
+            
+            cell.pageButton.layer.borderWidth = 3
+            cell.pageButton.layer.borderColor = UIColor.black.cgColor
+            cell.pageButton.layer.cornerRadius = 50
+            
+            cell.pageButton.tag = indexPath.row
+            cell.pageButton.addTarget(self, action: #selector(buttonSelected), for: .touchUpInside)
+            
+            
+        }
+        cell.pageLabel.textAlignment = .center
+        cell.pageLabel.lineBreakMode = .byWordWrapping
+        cell.pageLabel.numberOfLines = 4
+        cell.pageLabel.text = instructions[indexPath.row]
         
-        
-        
-        
-    
+
         return cell
+    }
+    
+    @objc func buttonClicked(){
+        print("here")
     }
 
     // MARK: UICollectionViewDelegate
