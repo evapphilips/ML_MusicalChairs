@@ -102,8 +102,7 @@ class IntroCollectionViewController: UICollectionViewController {
             cell.pageButton.layer.borderColor = UIColor.black.cgColor
             cell.pageButton.layer.cornerRadius = 50
             
-            cell.pageButton.tag = indexPath.row
-            cell.pageButton.addTarget(self, action: #selector(buttonSelected), for: .touchUpInside)
+            cell.pageButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchDown)
             
             
         }
@@ -116,7 +115,7 @@ class IntroCollectionViewController: UICollectionViewController {
         return cell
     }
     
-    @objc func buttonClicked(){
+    @objc func buttonClicked(_ sender:UIButton){
         print("here")
     }
 
