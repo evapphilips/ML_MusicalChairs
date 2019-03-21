@@ -34,24 +34,21 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     var playerName: String?
     
     
-//    @IBAction func handelTestButton(_ sender: Any) {
-//
-//    }
-    
 
     // Start multipeer service with display name.
     func startMultipeerService(displayName: String) {
         self.multipeerService = nil
         self.multipeerService = MultipeerService(dispayName: displayName)
         self.multipeerService?.delegate = self
+        self.delegate?.startService()
         print("started")
     }
     
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
         DispatchQueue.main.async {
             connectedPlayers = connectedDevices.count
-//            playerCount = connectedPlayers+1
-            print("player count:"+"\(playerCount)")
+//            print("player count:"+"\(playerCount)")
+            
         }
     }
     
@@ -60,7 +57,6 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             print("hi")
         }
     }
-    
     
     // user name color symbol
     @IBOutlet weak var playerSymbolView: UIView!

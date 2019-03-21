@@ -11,8 +11,9 @@ import UIKit
 
 
 class ReadyViewController: UIViewController, GameViewControllerDelegate {
+    
     func startService() {
-        
+        print("startService")
     }
     
     let gameViewController = GameViewController()
@@ -53,7 +54,6 @@ class ReadyViewController: UIViewController, GameViewControllerDelegate {
             if let name = self.alert.textFields?.first?.text {
                 // Save username and set to title.
                 self.username = name
-                // self.navigationItem.title = name
                 print("hello")
             }
             print("connected players:"+"\(connectedPlayers)")
