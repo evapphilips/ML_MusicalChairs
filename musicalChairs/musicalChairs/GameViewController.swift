@@ -25,8 +25,12 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     @IBOutlet weak var playerSymbolView: UIView!
     @IBOutlet weak var playerNameLabel: UILabel!
     @IBOutlet var buttons : [UIButton]!
-    
     @IBOutlet weak var buttonCountLabel: UILabel!
+    
+    
+    var countDownLabel:UILabel!
+    var time = 5
+    var timer = Timer()
     
     // Popup for entering username.
     var alert : UIAlertController!
@@ -38,18 +42,24 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     var multipeerService: MultipeerService?
     var playerName: String?
     
-//    //assign at Ready pressed in ReadyViewController
-//    let r: CGFloat = .random()
-//    let g: CGFloat = .random()
-//    let b: CGFloat = .random()
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameViewController.action), userInfo: nil, repeats: true)
+        countDownLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        countDownLabel.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/2)
+        countDownLabel.textAlignment = .center
+        countDownLabel.font = countDownLabel.font.withSize(150)
+        countDownLabel.backgroundColor = UIColor.gray
+        countDownLabel.text = "5"
+        self.view.addSubview(self.countDownLabel)
         
         if let name = playerName {
             print(name)
             playerNameLabel.text = name
         }
+        super.viewDidLoad()
+
         
         self.applyRoundCorner(playerSymbolView)
         playerSymbolView.layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
@@ -58,6 +68,11 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
 //        testButton.layer.borderColor = UIColor.black.cgColor
 //        testButton.layer.borderWidth = 0
         
+//        if time !== 0 {
+//            buttons.forEach{
+//                $0.
+//            }
+//        }
         buttons.forEach {
             self.applyRoundCorner($0)
             $0.layer.borderColor = UIColor.black.cgColor
@@ -68,6 +83,29 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         multipeerService?.delegate = self
     }
     
+    @objc func action(){
+        time -= 1
+        countDownLabel.text = String(time)
+        if time == 5 {
+            countDownLabel.backgroundColor = UIColor.gray
+        }else if time == 4 {
+            countDownLabel.backgroundColor = UIColor.blue
+        } else if time == 3 {
+            countDownLabel.backgroundColor = UIColor.green
+        } else if time == 2 {
+            countDownLabel.backgroundColor = UIColor.yellow
+        } else if time == 1 {
+            countDownLabel.backgroundColor = UIColor.orange
+        } else if time == 0 {
+            countDownLabel.backgroundColor = UIColor.red
+            countDownLabel.font = countDownLabel.font.withSize(70)
+            countDownLabel.text = "START!"
+        }
+        if time == -1 {
+            timer.invalidate()
+            countDownLabel.isHidden = true
+        }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

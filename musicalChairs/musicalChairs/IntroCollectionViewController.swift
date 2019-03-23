@@ -18,16 +18,14 @@ let b: CGFloat = .random()
 class IntroCollectionViewController: UICollectionViewController, MultipeerServiceDelegate {
     
     var playerCountLabel: UILabel!
-    
     // start multipeer serview
     var multipeerService: MultipeerService?
     
     // Popup for entering username.
     var alert : UIAlertController!
+    
     // Display name.
-    //    var username = ""
     var username : String?
-
     
     // deifine snap layout
     let flowLayout = IntroCollectionViewFlowLayout()
@@ -37,7 +35,6 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     
     // define instructions array
     var instructions: [String] = ["Waiting for other players. Swipe to view the instructions", "The object of the game is to occupy a circle as fast as possible.", "But dont let anyone steal your circle before the time is up.", "Practice occupying a circle by clicking on the circle below."]
-    
     
 
     override func viewDidLoad() {
@@ -59,14 +56,12 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Prompt user to input username and start P2P communication.
         restart()
-        
     }
     
     // Show popup for entering username, P2P servic will start when name entered.
@@ -126,16 +121,16 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
             print("ReadyViewController: connectedDevices: \(connectedDevices)")
             
             // NLAM: Get player count and process.
-            
             // ... add 1 to include yourself.
             playerCount = connectedDevices.count + 1
             
             // ... display number of players.
             self.playerCountLabel.text = "Number of players: \(playerCount)"
             
-            
             // ... start once you reached a set number.
             if playerCount == 4 {
+                //once the last player is ready, wait for 3 seconds and instantiate GameViewController
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
                 
@@ -145,6 +140,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
                 vc.playerName = self.username
                 
                 self.present(vc, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -239,7 +235,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     */
 
     /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+     Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         return false
     }
