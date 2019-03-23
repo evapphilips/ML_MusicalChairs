@@ -10,6 +10,7 @@ import UIKit
 // player variables
 var playerCount: Int = 0
 var playerStatus: Bool = false
+let playerTotal: Int = 4
 let buttonTotal: Int = 3   //button Total < playerTotal
 var buttonCount: Int = 0
 
@@ -24,7 +25,9 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     @IBOutlet weak var playerSymbolView: UIView!
     @IBOutlet weak var playerNameLabel: UILabel!
     @IBOutlet var buttons : [UIButton]!
+    @IBOutlet weak var leftStackView: UIStackView!
     @IBOutlet weak var buttonCountLabel: UILabel!
+    var titleLabel: UILabel!
     
     var countDownLabel:UILabel!
     var time = 5
@@ -58,18 +61,23 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         }
         super.viewDidLoad()
 
-        
+        titleLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/12, width: self.view.frame.width, height: 40))
+        titleLabel.textAlignment = .center
+        titleLabel.text = "Mobile Lab Musical Chairs"
+        self.view.addSubview(titleLabel)
         self.applyRoundCorner(playerSymbolView)
         playerSymbolView.layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
         
         buttons.forEach {
             self.applyRoundCorner($0)
             $0.layer.borderColor = UIColor.black.cgColor
-            $0.layer.borderWidth = 2
+            $0.layer.borderWidth = 1
         }
-        
+//        leftStackView.spacing = self.view.frame.height/50
         // NLAM: Set the delegate here.
         multipeerService?.delegate = self
+        
+        buttonCountLabel.isHidden = true
     }
     
     @objc func action(){
@@ -107,7 +115,7 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         buttons[index].layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
         buttons[index].setTitle(playerName, for: .normal)
         buttons[index].setTitleColor(.black, for: .normal)
-        
+        buttons[index].layer.borderWidth = 0
         //send message to peers
         multipeerService?.send(msg: "\(index),\(playerName!),\(r),\(g),\(b)")
         
@@ -149,6 +157,7 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
                 guard let gr = NumberFormatter().number(from: msgArray[3]) else {return}
                 guard let bl = NumberFormatter().number(from: msgArray[4]) else {return}
                 self.buttons[i].layer.backgroundColor = UIColor(red: CGFloat(truncating: rd), green: CGFloat(truncating: gr), blue: CGFloat(truncating: bl), alpha: 1.0).cgColor
+                self.buttons[i].layer.borderWidth = 0
             }
             
             //increment occupied buttons
