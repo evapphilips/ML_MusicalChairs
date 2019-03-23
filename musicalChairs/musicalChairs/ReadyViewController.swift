@@ -10,26 +10,27 @@ import UIKit
 
 
 
-class ReadyViewController: UIViewController {
+class ReadyViewController: UIViewController, MultipeerServiceDelegate {
+    
+    @IBOutlet weak var playerCountLabel: UILabel!
+    var multipeerService: MultipeerService?
+    
     // Popup for entering username.
     var alert : UIAlertController!
     // Display name.
-    var username = ""
-    
+//    var username = ""
+    var username : String?
+
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Prompt user to input username and start P2P communication.
-//        restart()
-        
-        // set up collection view
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Prompt user to input username and start P2P communication.
         restart()
 
     }
@@ -49,19 +50,19 @@ class ReadyViewController: UIViewController {
             if let name = self.alert.textFields?.first?.text {
                 // Save username and set to title.
                 self.username = name
-//                self.navigationItem.title = name
             }
             
-//            self.performSegue(withIdentifier: "PlayerNameSegue", sender: self)
-//
-//            // Instantiate GameViewController
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            guard let gameVC = storyboard.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
-//                print("Error instantiating GameViewController" )
-//                return
-//            }
-//            // Present GameViewController.
-//            self.present(gameVC, animated: false, completion: nil)
+            // NLAM: Start multipeer server here.
+            if let name = self.username {
+                // NLAM: Create and start multipeerService.
+                self.multipeerService = MultipeerService(dispayName: name)
+                
+                // Set delegate to self.
+                self.multipeerService?.delegate = self
+                
+                // Set number to 1 to count our self.
+                self.playerCountLabel.text = "Number of players: 1"
+            }
         })
         action.isEnabled = false
         alert.addAction(action)
@@ -81,12 +82,39 @@ class ReadyViewController: UIViewController {
         return false
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as! GameViewController
-        vc.playerName = self.username
+    // NLAM: Delegate methods
+    func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
+        DispatchQueue.main.async {
+            print("ReadyViewController: connectedDevices: \(connectedDevices)")
+            
+            // NLAM: Get player count and process.
+            
+            // ... add 1 to include yourself.
+            playerCount = connectedDevices.count + 1
+            
+            // ... display number of players.
+            self.playerCountLabel.text = "Number of players: \(playerCount)"
+            
+            
+            // ... start once you reached a set number.
+            if playerCount == 4 {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
+                
+                // NLAM: IMPORTANT: Pass multipeerService object down to GameViewController.
+                vc.multipeerService = self.multipeerService
+                
+                vc.playerName = self.username
+                
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
     }
     
-
-    
+    func receivedMsg(manager: MultipeerService, msg: String) {
+        DispatchQueue.main.async {
+            print("ReadyViewController: receivedMsg")
+        }
+    }
 }
 
