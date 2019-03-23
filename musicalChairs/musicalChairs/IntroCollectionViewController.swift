@@ -128,7 +128,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
             self.playerCountLabel.text = "Number of players: \(playerCount)"
             
             // ... start once you reached a set number.
-            if playerCount == 4 {
+            if playerCount > 3 {
                 //once the last player is ready, wait for 3 seconds and instantiate GameViewController
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
