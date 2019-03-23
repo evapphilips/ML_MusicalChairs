@@ -17,6 +17,7 @@ class IntroCollectionViewCell: UICollectionViewCell {
 //        pageButton.backgroundColor = UIColor.red
         pageButton.layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
         
+
     }
     
 }

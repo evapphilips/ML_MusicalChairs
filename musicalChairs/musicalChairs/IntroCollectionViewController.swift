@@ -17,7 +17,9 @@ let b: CGFloat = .random()
 
 class IntroCollectionViewController: UICollectionViewController, MultipeerServiceDelegate {
     
-    @IBOutlet weak var playerCountLabel: UILabel!
+    var playerCountLabel: UILabel!
+    
+    // start multipeer serview
     var multipeerService: MultipeerService?
     
     // Popup for entering username.
@@ -42,7 +44,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         super.viewDidLoad()
         
         // set title
-        titleUILabel = UILabel(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 40))
+        titleUILabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/12, width: self.view.frame.width, height: 40))
         titleUILabel.textAlignment = .center
         titleUILabel.text = "Mobile Lab Musical Chairs"
         self.view.addSubview(titleUILabel)
@@ -93,7 +95,11 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
                 self.multipeerService?.delegate = self
                 
                 // Set number to 1 to count our self.
+                self.playerCountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 30))
+                self.playerCountLabel.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/12)
+                self.playerCountLabel.textAlignment = .center
                 self.playerCountLabel.text = "Number of players: 1"
+                self.view.addSubview(self.playerCountLabel)
             }
         })
         action.isEnabled = false
