@@ -8,9 +8,7 @@
 
 import UIKit
 // player variables
-var connectedPlayers: Int = 0
 var playerCount: Int = 0
-let playerTotal: Int = 4
 var playerStatus: Bool = false
 let buttonTotal: Int = 3   //button Total < playerTotal
 var buttonCount: Int = 0
@@ -47,6 +45,12 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let name = playerName {
+            print(name)
+            playerNameLabel.text = name
+        }
+        
         self.applyRoundCorner(playerSymbolView)
         playerSymbolView.layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
         
@@ -60,18 +64,13 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             $0.layer.borderWidth = 2
         }
         
-        if let name = playerName {
-            // Start P2P.
-            print(name)
-            //self.startMultipeerService(displayName: name)
-            //playerNameLabel.text = name;
-        }
-        
+        // NLAM: Set the delegate here.
+        multipeerService?.delegate = self
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        restart()
     }
     
     @IBAction func handleTestButton(_ sender: Any) {
@@ -111,18 +110,11 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         }
     }
     
-    // Start multipeer service with display name.
-    func startMultipeerService(displayName: String) {
-        self.multipeerService = nil
-        self.multipeerService = MultipeerService(dispayName: displayName)
-        self.multipeerService?.delegate = self
-    }
-    
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
         DispatchQueue.main.async {
-            connectedPlayers = connectedDevices.count
-            playerCount = connectedPlayers+1
-            print("player count:"+"\(playerCount)")
+//            playerCount = connectedDevices.count+1
+//            print("player count:"+"\(playerCount)")
+            print("connectedDevicesChanged")
         }
     }
     
@@ -151,45 +143,6 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             }
         }
     }
-    
-    //---------------------------test--------------------------------------
-    // Show popup for entering username, P2P servic will start when name entered.
-    func restart() {
-        print("restart")
-        // Create alert popup.
-        alert = UIAlertController(title: "Enter your player name", message: nil, preferredStyle: .alert)
-        alert.addTextField(configurationHandler: { textField in
-            textField.placeholder = "Player name..."
-            textField.addTarget(self, action: #selector(self.alertTextFieldDidChange(_:)), for: .editingChanged)
-        })
-        
-        // Create action on Ready press.
-        let action = UIAlertAction(title: "Ready", style: .default, handler: { action in
-            if let name = self.alert.textFields?.first?.text {
-                self.playerName = name
-                self.playerNameLabel.text = name;
-                self.startMultipeerService(displayName: name)
-            }
-        })
-        action.isEnabled = false
-        alert.addAction(action)
-        
-        // Show alert popup.
-        self.present(alert, animated: true)
-    }
-    
-    // Disable ready button when text field is empty.
-    @objc func alertTextFieldDidChange(_ sender: UITextField) {
-        alert.actions[0].isEnabled = sender.text!.count > 0
-    }
-    
-    
-    // Dismisses keyboard when done is pressed.
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        view.endEditing(true)
-        return false
-    }
-    //------------------------------test------------------------------------
 
     
     // Show popup for game result
