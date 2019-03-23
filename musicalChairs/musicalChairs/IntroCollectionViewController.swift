@@ -34,7 +34,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     var titleUILabel: UILabel!
     
     // define instructions array
-    var instructions: [String] = ["Waiting for other players. Swipe to view the instructions", "The object of the game is to occupy a circle as fast as possible.", "But dont let anyone steal your circle before the time is up.", "Practice occupying a circle by clicking on the circle below."]
+    var instructions: [String] = ["Waiting for other players. Swipe to view the instructions", "Occupy a circle as fast as possible.", "Each player can only occupy one circle.", "Practice occupying a circle by clicking on the circle below."]
     
 
     override func viewDidLoad() {
@@ -128,9 +128,9 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
             self.playerCountLabel.text = "Number of players: \(playerCount)"
             
             // ... start once you reached a set number.
-            if playerCount == 4 {
+            if playerCount == playerTotal {
                 //once the last player is ready, wait for 3 seconds and instantiate GameViewController
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
                 
@@ -202,12 +202,11 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
             cell.pageButton.isHidden = false
             cell.pageButton.frame = CGRect(x: 75, y: 150, width: 100, height: 100)
             
-            cell.pageButton.layer.borderWidth = 3
+            cell.pageButton.layer.borderWidth = 1
             cell.pageButton.layer.borderColor = UIColor.black.cgColor
             cell.pageButton.layer.cornerRadius = 50
-            
-            
         }
+        
         cell.pageLabel.textAlignment = .center
         cell.pageLabel.lineBreakMode = .byWordWrapping
         cell.pageLabel.numberOfLines = 4

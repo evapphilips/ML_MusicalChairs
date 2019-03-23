@@ -15,6 +15,7 @@ class IntroCollectionViewCell: UICollectionViewCell {
     
     @IBAction func buttonClicked(_ sender: UIButton) {
         pageButton.layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
+        pageButton.layer.borderWidth = 0
     }
     
 }
