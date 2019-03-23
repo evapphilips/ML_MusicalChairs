@@ -13,4 +13,8 @@ class IntroCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var pageLabel: UILabel!
     @IBOutlet weak var pageButton: UIButton!
     
+    @IBAction func buttonClicked(_ sender: UIButton) {
+        pageButton.backgroundColor = UIColor.red
+    }
+    
 }

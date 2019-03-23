@@ -199,7 +199,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
             cell.pageButton.layer.borderColor = UIColor.black.cgColor
             cell.pageButton.layer.cornerRadius = 50
             
-            cell.pageButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchDown)
+//            cell.pageButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchDown)
             
             
         }
@@ -212,9 +212,9 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         return cell
     }
     
-    @objc func buttonClicked(_ sender:UIButton){
-        print("here")
-    }
+//    @objc func buttonClicked(_ sender:UIButton){
+//        print("here")
+//    }
 
     // MARK: UICollectionViewDelegate
 
