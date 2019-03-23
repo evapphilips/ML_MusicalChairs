@@ -38,10 +38,10 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     var multipeerService: MultipeerService?
     var playerName: String?
     
-    //assign at Ready pressed in ReadyViewController
-    let r: CGFloat = .random()
-    let g: CGFloat = .random()
-    let b: CGFloat = .random()
+//    //assign at Ready pressed in ReadyViewController
+//    let r: CGFloat = .random()
+//    let g: CGFloat = .random()
+//    let b: CGFloat = .random()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,8 +112,6 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
         DispatchQueue.main.async {
-//            playerCount = connectedDevices.count+1
-//            print("player count:"+"\(playerCount)")
             print("connectedDevicesChanged")
         }
     }
@@ -169,15 +167,6 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     func applyRoundCorner(_ object:AnyObject){
         object.layer.cornerRadius = object.frame.size.width/2
         object.layer?.masksToBounds = true
-    }
-}
-
-
-
-//generate random CGFloat number for player color
-extension CGFloat {
-    static func random() -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UInt32.max)
     }
 }
 
