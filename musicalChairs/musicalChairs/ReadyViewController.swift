@@ -22,9 +22,12 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate {
     var username : String?
 
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Prompt user to input username and start P2P communication.
@@ -60,7 +63,6 @@ class ReadyViewController: UIViewController, MultipeerServiceDelegate {
                 // Set number to 1 to count our self.
                 self.playerCountLabel.text = "Number of players: 1"
             }
-            
         })
         action.isEnabled = false
         alert.addAction(action)
