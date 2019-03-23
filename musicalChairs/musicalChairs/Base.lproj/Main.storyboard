@@ -167,9 +167,6 @@
                                 <state key="normal">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="handleTestButton:" destination="7zL-sJ-c3E" eventType="touchDown" id="o7v-Gx-OTB"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zN2-FV-n2i">
                                 <rect key="frame" x="53" y="119" width="70" height="70"/>
@@ -225,7 +222,6 @@
                         <outlet property="buttonCountLabel" destination="eKI-NQ-TS4" id="Gc5-ze-AYp"/>
                         <outlet property="playerNameLabel" destination="Uhn-w3-rnM" id="jUB-a3-XDx"/>
                         <outlet property="playerSymbolView" destination="bVv-f5-Q1B" id="ccu-5K-OGn"/>
-                        <outlet property="testButton" destination="Uap-7M-YmX" id="Tg8-GR-dof"/>
                         <outletCollection property="buttons" destination="zN2-FV-n2i" collectionClass="NSMutableArray" id="NRz-IH-bu1"/>
                         <outletCollection property="buttons" destination="P4B-Oq-9tO" collectionClass="NSMutableArray" id="856-rM-uqf"/>
                         <outletCollection property="buttons" destination="9Y1-on-9Q1" collectionClass="NSMutableArray" id="vnq-yC-vgr"/>

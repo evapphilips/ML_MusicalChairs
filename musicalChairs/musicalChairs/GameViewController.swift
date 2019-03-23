@@ -21,12 +21,10 @@ let ServiceType = "musical-chairs"
 
 
 class GameViewController: UIViewController, MultipeerServiceDelegate {
-    @IBOutlet weak var testButton: UIButton!
     @IBOutlet weak var playerSymbolView: UIView!
     @IBOutlet weak var playerNameLabel: UILabel!
     @IBOutlet var buttons : [UIButton]!
     @IBOutlet weak var buttonCountLabel: UILabel!
-    
     
     var countDownLabel:UILabel!
     var time = 5
@@ -64,15 +62,6 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         self.applyRoundCorner(playerSymbolView)
         playerSymbolView.layer.backgroundColor = UIColor(red: r, green: g, blue: b, alpha: 1.0).cgColor
         
-//        self.applyRoundCorner(testButton)
-//        testButton.layer.borderColor = UIColor.black.cgColor
-//        testButton.layer.borderWidth = 0
-        
-//        if time !== 0 {
-//            buttons.forEach{
-//                $0.
-//            }
-//        }
         buttons.forEach {
             self.applyRoundCorner($0)
             $0.layer.borderColor = UIColor.black.cgColor
@@ -109,12 +98,6 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    }
-    
-    @IBAction func handleTestButton(_ sender: Any) {
-        testButton.layer.backgroundColor = UIColor.red.cgColor
-        testButton.setTitle(playerName, for: .normal)
-        testButton.setTitleColor(.black, for: .normal)
     }
     
     
