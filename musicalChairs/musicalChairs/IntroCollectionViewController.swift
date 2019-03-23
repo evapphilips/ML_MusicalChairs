@@ -10,6 +10,11 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
+//assign a random button color to each player
+let r: CGFloat = .random()
+let g: CGFloat = .random()
+let b: CGFloat = .random()
+
 class IntroCollectionViewController: UICollectionViewController, MultipeerServiceDelegate {
     
     @IBOutlet weak var playerCountLabel: UILabel!
@@ -199,8 +204,6 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
             cell.pageButton.layer.borderColor = UIColor.black.cgColor
             cell.pageButton.layer.cornerRadius = 50
             
-//            cell.pageButton.addTarget(self, action: #selector(buttonClicked(_:)), for: .touchDown)
-            
             
         }
         cell.pageLabel.textAlignment = .center
@@ -211,10 +214,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
 
         return cell
     }
-    
-//    @objc func buttonClicked(_ sender:UIButton){
-//        print("here")
-//    }
+
 
     // MARK: UICollectionViewDelegate
 
@@ -247,4 +247,11 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     }
     */
 
+}
+
+//generate random CGFloat number for player color
+extension CGFloat {
+    static func random() -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UInt32.max)
+    }
 }
