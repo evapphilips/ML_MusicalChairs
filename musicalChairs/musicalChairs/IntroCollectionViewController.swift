@@ -32,7 +32,6 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     // deifine snap layout
     let flowLayout = IntroCollectionViewFlowLayout()
 
-    
     // define instructions array
     var instructions: [String] = ["Waiting for other players. Swipe to view the instructions", "Occupy a circle as fast as possible.", "Each player can only occupy one circle.", "Practice occupying a circle by clicking on the circle below."]
     

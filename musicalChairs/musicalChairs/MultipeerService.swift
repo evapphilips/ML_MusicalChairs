@@ -48,10 +48,10 @@ class MultipeerService : NSObject {
         self.serviceBrowser.stopBrowsingForPeers()
     }
     
-    func disconnect() {
-        self.serviceAdvertiser.stopAdvertisingPeer()
-        self.serviceBrowser.stopBrowsingForPeers()
-    }
+//    func disconnect() {
+//        self.serviceAdvertiser.stopAdvertisingPeer()
+//        self.serviceBrowser.stopBrowsingForPeers()
+//    }
 
 
     /////////////////////////////////////////////////////////////////////////
