@@ -9,12 +9,10 @@
 import UIKit
 // player variables
 var playerCount: Int = 0
-var playerStatus: Bool = false
-let playerTotal: Int = 4
-let buttonTotal: Int = 3   //button Total < playerTotal
-var buttonCount: Int = 0
-var playerReady: Bool = false
-var playerReadyCount: Int = 0
+//var playerStatus: Bool = false
+let playerTotal: Int = 4   //change to 16
+let buttonTotal: Int = 3   //change to 10
+//var buttonCount: Int = 0
 
 ////////////////////////////////////////////////////////////////////
 // NOTE: Update to unique name.
@@ -30,25 +28,24 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
     @IBOutlet weak var leftStackView: UIStackView!
     @IBOutlet weak var buttonCountLabel: UILabel!
     var titleLabel: UILabel!
-    
     var countDownLabel:UILabel!
+    var gameOverAlert:UIAlertController!
+
+    //Countdown
     var time = 5
     var timer = Timer()
+
+    var playerStatus: Bool = false
+    var buttonCount: Int = 0
     
-    // Popup for entering username.
-    var alert : UIAlertController!
-    
-    // Popup for entering username.
-    var gameOverAlert:UIAlertController!
-    
+
     // Service for handling P2P communication.
     var multipeerService: MultipeerService?
     var playerName: String?
     
     
     override func viewDidLoad() {
-        
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameViewController.action), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameViewController.countDownAction), userInfo: nil, repeats: true)
         countDownLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         countDownLabel.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/2)
         countDownLabel.textAlignment = .center
@@ -61,9 +58,9 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             print(name)
             playerNameLabel.text = name
         }
+        
         super.viewDidLoad()
         
-//        titleLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/15, width: self.view.frame.width, height: 40))
         titleLabel = UILabel(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 40))
         titleLabel.textAlignment = .center
         titleLabel.text = "Mobile Lab Musical Chairs"
@@ -76,14 +73,15 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             $0.layer.borderColor = UIColor.black.cgColor
             $0.layer.borderWidth = 1
         }
-        //        leftStackView.spacing = self.view.frame.height/50
-        // NLAM: Set the delegate here.
-        multipeerService?.delegate = self
+        //leftStackView.spacing = self.view.frame.height/50
         
+        //Set the delegate here.
+        multipeerService?.delegate = self
+
         buttonCountLabel.isHidden = true
     }
     
-    @objc func action(){
+    @objc func countDownAction(){
         time -= 1
         countDownLabel.text = String(time)
         if time == 5 {
@@ -129,7 +127,6 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         
         //player won
         playerStatus = true
-        //print("i won")
         
         //increment occupied buttons
         buttonCount = buttonCount + 1
@@ -163,12 +160,12 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             self.buttons[i].layer.borderWidth = 0
             
             //increment occupied buttons
-            buttonCount = buttonCount + 1
+            self.buttonCount = self.buttonCount + 1
             //debug: printing buttonCount on label
-            self.buttonCountLabel.text = ("\(buttonCount) buttons occupied")
+            self.buttonCountLabel.text = ("\(self.buttonCount) buttons occupied")
             
             //present gameOverAlert when all the buttons occupied
-            if buttonCount == buttonTotal {
+            if self.buttonCount == buttonTotal {
                 self.gameover()
             }
         }
@@ -184,14 +181,17 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             gameOverAlert = UIAlertController(title: "Game Over! You Lost!", message: nil, preferredStyle: .alert)
         }
         
-        // Create action on Restart press, go back to ReadyViewController
+        // Create action on "Restart" press, disconnect multipeerService, go back to ReadyViewController
         let action = UIAlertAction(title: "Restart", style: .default, handler: { action in
-            print("restarted")
+            self.multipeerService!.disconnect()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let ivc = storyboard.instantiateViewController(withIdentifier: "IntroCollectionViewController") as! IntroCollectionViewController
+            self.present(ivc, animated: true, completion: nil)
         })
-        action.isEnabled = false
+        action.isEnabled = true
         gameOverAlert.addAction(action)
         
-        // Show alert popup.
+        // Show gameOverAlert popup.
         self.present(gameOverAlert, animated: true)
     }
     

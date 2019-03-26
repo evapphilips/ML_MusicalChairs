@@ -13,7 +13,7 @@
         <!--Intro Collection View Controller-->
         <scene sceneID="b8d-Gx-Wag">
             <objects>
-                <collectionViewController id="jO8-la-Jv6" customClass="IntroCollectionViewController" customModule="musicalChairs" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="IntroCollectionViewController" id="jO8-la-Jv6" customClass="IntroCollectionViewController" customModule="musicalChairs" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" id="Stv-Ca-HTN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

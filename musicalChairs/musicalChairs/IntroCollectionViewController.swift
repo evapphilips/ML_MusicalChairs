@@ -19,21 +19,19 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     
     var playerCountLabel: UILabel!
     var progressBar: UIProgressView!
+    var titleUILabel: UILabel!
+    // Popup for entering username.
+    var alert : UIAlertController!
     
     // start multipeer serview
     var multipeerService: MultipeerService?
-    
-    // Popup for entering username.
-    var alert : UIAlertController!
     
     // Display name.
     var username : String?
     
     // deifine snap layout
     let flowLayout = IntroCollectionViewFlowLayout()
-    
-    // define UI label for title
-    var titleUILabel: UILabel!
+
     
     // define instructions array
     var instructions: [String] = ["Waiting for other players. Swipe to view the instructions", "Occupy a circle as fast as possible.", "Each player can only occupy one circle.", "Practice occupying a circle by clicking on the circle below."]
@@ -42,9 +40,8 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     override func viewDidLoad() {
         super.viewDidLoad()
         // set title
-//        titleUILabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/15, width: self.view.frame.width, height: 40))
+        //titleUILabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/15, width: self.view.frame.width, height: 40))
         titleUILabel = UILabel(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 40))
-
         titleUILabel.textAlignment = .center
         titleUILabel.text = "Mobile Lab Musical Chairs"
         self.view.addSubview(titleUILabel)
@@ -52,12 +49,32 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        
+    
         // set up collection view
         guard let introCollectionView = collectionView else { fatalError() }
         introCollectionView.collectionViewLayout = flowLayout
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+       
+        //progress bar
+        self.progressBar = UIProgressView(progressViewStyle: .default)
+        self.progressBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - self.view.frame.width/6, height: 20)
+        self.progressBar.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - 60)
+        self.progressBar.trackTintColor = .white
+        self.progressBar.progressTintColor = .gray
+        //increase height of progressBar
+        let transform : CGAffineTransform = CGAffineTransform(scaleX: 1.0, y: 4.0)
+        self.progressBar.transform = transform
+        //apply rounded corner
+        self.progressBar.layer.masksToBounds = true
+        self.progressBar.layer.cornerRadius = progressBar.frame.height/2.0
+        self.view.addSubview(self.progressBar)
+        
+        //playerCountLabel
+        self.playerCountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 30))
+        self.playerCountLabel.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/10)
+        self.playerCountLabel.textAlignment = .center
+        self.view.addSubview(self.playerCountLabel)
         
     }
     
@@ -65,7 +82,6 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         super.viewDidAppear(animated)
         // Prompt user to input username and start P2P communication.
         restart()
-        
     }
     
     // Show popup for entering username, P2P servic will start when name entered.
@@ -85,34 +101,18 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
                 self.username = name
             }
             
-            // NLAM: Start multipeer server here.
+            // Start multipeer server here.
             if let name = self.username {
-                // NLAM: Create and start multipeerService.
+                // Create and start multipeerService.
                 self.multipeerService = MultipeerService(dispayName: name)
-                
-                // Set delegate to self.
                 self.multipeerService?.delegate = self
-                
-                // Set number to 1 to count our self.
-                self.playerCountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 30))
-                self.playerCountLabel.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/10)
-                self.playerCountLabel.textAlignment = .center
-                self.playerCountLabel.text = "Number of players: 1"
-                self.view.addSubview(self.playerCountLabel)
             }
-            //progress bar
-            self.progressBar = UIProgressView(progressViewStyle: .default)
-            self.progressBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - self.view.frame.width/8, height: 20)
-            self.progressBar.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - 30)
-            self.progressBar.trackTintColor = .black
-            self.progressBar.progressTintColor = .blue
-            self.view.addSubview(self.progressBar)
             
-//            self.progressBar = UIProgressView(frame: CGRect (x: 0, y: self.view.frame.height-30, width: self.view.frame.width - self.view.frame.width/8, height: 50))
-//            self.progressBar.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/11)
-            
-            self.progressBar.setProgress(Float(playerCount), animated: true)
-            self.progressBar.progress = Float(playerCount/playerTotal)
+            //show playerCountLabel and progressBar for the first player
+            if playerCount == 0 {
+                self.playerCountLabel.text = "Number of players: 1 "
+                self.progressBar.setProgress(Float(1)/Float(playerTotal), animated: true)
+            }
         })
         action.isEnabled = false
         alert.addAction(action)
@@ -133,30 +133,30 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         return false
     }
     
-    // NLAM: Delegate methods
+    //Delegate methods
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
         DispatchQueue.main.async {
             print("ReadyViewController: connectedDevices: \(connectedDevices)")
             
-            // NLAM: Get player count and process.
-            // ... add 1 to include yourself.
+            //Get player count and process... + 1 to include yourself.
             playerCount = connectedDevices.count + 1
             
-            // ... display number of players.
+            //update number of players.
             self.playerCountLabel.text = "Number of players: \(playerCount)"
-            
+            //update progressbar
+            self.progressBar.setProgress(Float(playerCount)/Float(playerTotal), animated: true)
+
             // ... start once you reached a set number.
             if playerCount == playerTotal {
-                //once the last player is ready, wait for 3 seconds and instantiate GameViewController
+                //once the last player is ready, wait for 5 seconds and instantiate GameViewController
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
-                    
-                    // NLAM: IMPORTANT: Pass multipeerService object down to GameViewController.
+
+                    //IMPORTANT: Pass multipeerService object down to GameViewController.
                     vc.multipeerService = self.multipeerService
-                    
                     vc.playerName = self.username
-                    
+
                     self.present(vc, animated: true, completion: nil)
                 }
             }
@@ -166,24 +166,11 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     func receivedMsg(manager: MultipeerService, msg: String) {
         DispatchQueue.main.async {
             print("ReadyViewController: receivedMsg")
-            
         }
     }
+
     
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using [segue destinationViewController].
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    // MARK: UICollectionViewDataSource
-    
+    //Configure collection view
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -231,42 +218,8 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         cell.pageLabel.numberOfLines = 4
         cell.pageLabel.text = instructions[indexPath.row]
         
-        
         return cell
     }
-    
-    
-    // MARK: UICollectionViewDelegate
-    
-    /*
-     // Uncomment this method to specify if the specified item should be highlighted during tracking
-     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment this method to specify if the specified item should be selected
-     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-     
-     }
-     */
-    
 }
 
 //generate random CGFloat number for player color
