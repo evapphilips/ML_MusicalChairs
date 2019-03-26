@@ -13,6 +13,8 @@ var playerStatus: Bool = false
 let playerTotal: Int = 4
 let buttonTotal: Int = 3   //button Total < playerTotal
 var buttonCount: Int = 0
+var playerReady: Bool = false
+var playerReadyCount: Int = 0
 
 ////////////////////////////////////////////////////////////////////
 // NOTE: Update to unique name.
@@ -61,7 +63,8 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         }
         super.viewDidLoad()
         
-        titleLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/12, width: self.view.frame.width, height: 40))
+//        titleLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/15, width: self.view.frame.width, height: 40))
+        titleLabel = UILabel(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 40))
         titleLabel.textAlignment = .center
         titleLabel.text = "Mobile Lab Musical Chairs"
         self.view.addSubview(titleLabel)

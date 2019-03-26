@@ -18,6 +18,8 @@ let b: CGFloat = .random()
 class IntroCollectionViewController: UICollectionViewController, MultipeerServiceDelegate {
     
     var playerCountLabel: UILabel!
+    var progressBar: UIProgressView!
+    
     // start multipeer serview
     var multipeerService: MultipeerService?
     
@@ -39,9 +41,10 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // set title
-        titleUILabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/12, width: self.view.frame.width, height: 40))
+//        titleUILabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/15, width: self.view.frame.width, height: 40))
+        titleUILabel = UILabel(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 40))
+
         titleUILabel.textAlignment = .center
         titleUILabel.text = "Mobile Lab Musical Chairs"
         self.view.addSubview(titleUILabel)
@@ -62,6 +65,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         super.viewDidAppear(animated)
         // Prompt user to input username and start P2P communication.
         restart()
+        
     }
     
     // Show popup for entering username, P2P servic will start when name entered.
@@ -91,11 +95,24 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
                 
                 // Set number to 1 to count our self.
                 self.playerCountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 30))
-                self.playerCountLabel.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/12)
+                self.playerCountLabel.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/10)
                 self.playerCountLabel.textAlignment = .center
                 self.playerCountLabel.text = "Number of players: 1"
                 self.view.addSubview(self.playerCountLabel)
             }
+            //progress bar
+            self.progressBar = UIProgressView(progressViewStyle: .default)
+            self.progressBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - self.view.frame.width/8, height: 20)
+            self.progressBar.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - 30)
+            self.progressBar.trackTintColor = .black
+            self.progressBar.progressTintColor = .blue
+            self.view.addSubview(self.progressBar)
+            
+//            self.progressBar = UIProgressView(frame: CGRect (x: 0, y: self.view.frame.height-30, width: self.view.frame.width - self.view.frame.width/8, height: 50))
+//            self.progressBar.center = CGPoint(x: self.view.frame.width/2, y: self.view.frame.height - self.view.frame.height/11)
+            
+            self.progressBar.setProgress(Float(playerCount), animated: true)
+            self.progressBar.progress = Float(playerCount/playerTotal)
         })
         action.isEnabled = false
         alert.addAction(action)
@@ -103,6 +120,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         // Show alert popup.
         self.present(alert, animated: true)
     }
+
     
     // Disable okay button when text field is empty.
     @objc func alertTextFieldDidChange(_ sender: UITextField) {
@@ -148,6 +166,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     func receivedMsg(manager: MultipeerService, msg: String) {
         DispatchQueue.main.async {
             print("ReadyViewController: receivedMsg")
+            
         }
     }
     
