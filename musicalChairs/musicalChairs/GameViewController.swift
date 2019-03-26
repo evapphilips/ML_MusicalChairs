@@ -60,7 +60,7 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             playerNameLabel.text = name
         }
         super.viewDidLoad()
-
+        
         titleLabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/12, width: self.view.frame.width, height: 40))
         titleLabel.textAlignment = .center
         titleLabel.text = "Mobile Lab Musical Chairs"
@@ -73,7 +73,7 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             $0.layer.borderColor = UIColor.black.cgColor
             $0.layer.borderWidth = 1
         }
-//        leftStackView.spacing = self.view.frame.height/50
+        //        leftStackView.spacing = self.view.frame.height/50
         // NLAM: Set the delegate here.
         multipeerService?.delegate = self
         
@@ -149,16 +149,15 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         DispatchQueue.main.async {
             //split msg into msgArray [index, playerName, r, g, b]
             let msgArray = msg.components(separatedBy: ",")
-            if let i = Int(msgArray[0]){
-                //disable occupied buttons and set title and color from received msg
-                self.buttons[i].isEnabled = false
-                self.buttons[i].setTitle(msgArray[1], for: .normal)
-                guard let rd = NumberFormatter().number(from: msgArray[2]) else {return}
-                guard let gr = NumberFormatter().number(from: msgArray[3]) else {return}
-                guard let bl = NumberFormatter().number(from: msgArray[4]) else {return}
-                self.buttons[i].layer.backgroundColor = UIColor(red: CGFloat(truncating: rd), green: CGFloat(truncating: gr), blue: CGFloat(truncating: bl), alpha: 1.0).cgColor
-                self.buttons[i].layer.borderWidth = 0
-            }
+            let i = Int(msgArray[0])!
+            //disable occupied buttons and set title and color from received msg
+            self.buttons[i].isEnabled = false
+            self.buttons[i].setTitle(msgArray[1], for: .normal)
+            guard let rd = NumberFormatter().number(from: msgArray[2]) else {return}
+            guard let gr = NumberFormatter().number(from: msgArray[3]) else {return}
+            guard let bl = NumberFormatter().number(from: msgArray[4]) else {return}
+            self.buttons[i].layer.backgroundColor = UIColor(red: CGFloat(truncating: rd), green: CGFloat(truncating: gr), blue: CGFloat(truncating: bl), alpha: 1.0).cgColor
+            self.buttons[i].layer.borderWidth = 0
             
             //increment occupied buttons
             buttonCount = buttonCount + 1
@@ -171,7 +170,7 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             }
         }
     }
-
+    
     
     // Show popup for game result
     func gameover() {

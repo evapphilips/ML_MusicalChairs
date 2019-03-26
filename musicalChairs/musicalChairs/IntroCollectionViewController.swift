@@ -36,7 +36,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     // define instructions array
     var instructions: [String] = ["Waiting for other players. Swipe to view the instructions", "Occupy a circle as fast as possible.", "Each player can only occupy one circle.", "Practice occupying a circle by clicking on the circle below."]
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,7 +46,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         titleUILabel.text = "Mobile Lab Musical Chairs"
         self.view.addSubview(titleUILabel)
         
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -55,7 +55,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         introCollectionView.collectionViewLayout = flowLayout
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -131,15 +131,15 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
             if playerCount == playerTotal {
                 //once the last player is ready, wait for 3 seconds and instantiate GameViewController
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
-                
-                // NLAM: IMPORTANT: Pass multipeerService object down to GameViewController.
-                vc.multipeerService = self.multipeerService
-                
-                vc.playerName = self.username
-                
-                self.present(vc, animated: true, completion: nil)
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
+                    
+                    // NLAM: IMPORTANT: Pass multipeerService object down to GameViewController.
+                    vc.multipeerService = self.multipeerService
+                    
+                    vc.playerName = self.username
+                    
+                    self.present(vc, animated: true, completion: nil)
                 }
             }
         }
@@ -151,38 +151,38 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         }
     }
     
-
-
+    
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using [segue destinationViewController].
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
     // MARK: UICollectionViewDataSource
-
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
-
+    
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return instructions.count
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! IntroCollectionViewCell
-    
         
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! MyCell
-//        cell.myLabel.text = myStrings[indexPath.row]
-//        return cell
+        
+        //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! MyCell
+        //        cell.myLabel.text = myStrings[indexPath.row]
+        //        return cell
         
         // Configure the cell
         cell.contentView.backgroundColor = .white
@@ -212,42 +212,42 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
         cell.pageLabel.numberOfLines = 4
         cell.pageLabel.text = instructions[indexPath.row]
         
-
+        
         return cell
     }
-
-
+    
+    
     // MARK: UICollectionViewDelegate
-
+    
     /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
+     // Uncomment this method to specify if the specified item should be highlighted during tracking
+     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+     return true
+     }
+     */
+    
     /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
+     // Uncomment this method to specify if the specified item should be selected
+     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+     return true
+     }
+     */
+    
     /*
      Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+     return false
+     }
+     
+     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+     return false
+     }
+     
+     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+     
+     }
+     */
     
-    }
-    */
-
 }
 
 //generate random CGFloat number for player color
