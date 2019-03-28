@@ -12,8 +12,8 @@ var playerCount: Int = 0
 //var playerStatus: Bool = false
 //let playerTotal: Int = 3   //change to 16
 //let buttonTotal: Int = 2   //change to 10
-let playerTotal: Int = 16
-let buttonTotal: Int = 10
+let playerTotal: Int = 9
+let buttonTotal: Int = 7
 //var buttonCount: Int = 0
 
 ////////////////////////////////////////////////////////////////////
