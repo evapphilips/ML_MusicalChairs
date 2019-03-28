@@ -10,8 +10,10 @@ import UIKit
 // player variables
 var playerCount: Int = 0
 //var playerStatus: Bool = false
-let playerTotal: Int = 4   //change to 16
-let buttonTotal: Int = 3   //change to 10
+//let playerTotal: Int = 4   //change to 16
+//let buttonTotal: Int = 3   //change to 10
+let playerTotal: Int = 16
+let buttonTotal: Int = 10
 //var buttonCount: Int = 0
 
 ////////////////////////////////////////////////////////////////////
@@ -136,12 +138,13 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         //present gameOverAlert if this player occupies the last button
         if buttonCount == buttonTotal {
             gameover()
+//            self.multipeerService?.session.disconnect()
         }
     }
     
     func connectedDevicesChanged(manager: MultipeerService, connectedDevices: [String]) {
         DispatchQueue.main.async {
-            print("connectedDevicesChanged")
+            print("GameViewController: connectedDevices: \(connectedDevices.count)")
         }
     }
     
@@ -167,6 +170,7 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             //present gameOverAlert when all the buttons occupied
             if self.buttonCount == buttonTotal {
                 self.gameover()
+//                self.multipeerService?.session.disconnect()
             }
         }
     }
@@ -181,15 +185,16 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             gameOverAlert = UIAlertController(title: "Game Over! You Lost!", message: nil, preferredStyle: .alert)
         }
         
-        // Create action on "Restart" press, disconnect multipeerService, go back to ReadyViewController
+        // Create action on "Restart" press, go back to ReadyViewController
         let action = UIAlertAction(title: "Restart", style: .default, handler: { action in
-            self.multipeerService?.session.disconnect()
-            playerCount = 0
+//            self.multipeerService?.session.disconnect()
+//            playerCount = 0
+            
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let ivc = storyboard.instantiateViewController(withIdentifier: "IntroCollectionViewController") as! IntroCollectionViewController
             self.present(ivc, animated: true, completion: nil)
         })
-        action.isEnabled = true
+        action.isEnabled = false
         gameOverAlert.addAction(action)
         
         // Show gameOverAlert popup.
