@@ -38,6 +38,7 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // set title
         //titleUILabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/15, width: self.view.frame.width, height: 40))
         titleUILabel = UILabel(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 40))
