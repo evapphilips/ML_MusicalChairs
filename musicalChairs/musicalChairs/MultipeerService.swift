@@ -37,10 +37,12 @@ class MultipeerService : NSObject {
         session.delegate = self
 
         self.serviceAdvertiser.delegate = self
-        self.serviceAdvertiser.startAdvertisingPeer()
+        // self.serviceAdvertiser.startAdvertisingPeer()
         
         self.serviceBrowser.delegate = self
-        self.serviceBrowser.startBrowsingForPeers()
+        // self.serviceBrowser.startBrowsingForPeers()
+        
+        startMatchmaking()
     }
     
     deinit {
@@ -48,10 +50,17 @@ class MultipeerService : NSObject {
         self.serviceBrowser.stopBrowsingForPeers()
     }
     
-//    func disconnect() {
-//        self.serviceAdvertiser.stopAdvertisingPeer()
-//        self.serviceBrowser.stopBrowsingForPeers()
-//    }
+    func startMatchmaking() {
+        print("Start matchmaking")
+        self.serviceAdvertiser.startAdvertisingPeer()
+        self.serviceBrowser.startBrowsingForPeers()
+    }
+    
+    func stopMatchmaking() {
+        print("Stop matchmaking")
+        self.serviceAdvertiser.stopAdvertisingPeer()
+        self.serviceBrowser.stopBrowsingForPeers()
+    }
 
 
     /////////////////////////////////////////////////////////////////////////

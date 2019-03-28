@@ -10,8 +10,8 @@ import UIKit
 // player variables
 var playerCount: Int = 0
 //var playerStatus: Bool = false
-//let playerTotal: Int = 4   //change to 16
-//let buttonTotal: Int = 3   //change to 10
+//let playerTotal: Int = 3   //change to 16
+//let buttonTotal: Int = 2   //change to 10
 let playerTotal: Int = 16
 let buttonTotal: Int = 10
 //var buttonCount: Int = 0
@@ -185,6 +185,9 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             gameOverAlert = UIAlertController(title: "Game Over! You Lost!", message: nil, preferredStyle: .alert)
         }
         
+        self.multipeerService?.session.disconnect()
+        self.multipeerService = nil
+
         // Create action on "Restart" press, go back to ReadyViewController
         let action = UIAlertAction(title: "Restart", style: .default, handler: { action in
 //            self.multipeerService?.session.disconnect()
@@ -192,9 +195,11 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let ivc = storyboard.instantiateViewController(withIdentifier: "IntroCollectionViewController") as! IntroCollectionViewController
+            
+            
             self.present(ivc, animated: true, completion: nil)
         })
-        action.isEnabled = false
+        action.isEnabled = true
         gameOverAlert.addAction(action)
         
         // Show gameOverAlert popup.
