@@ -184,6 +184,7 @@ class GameViewController: UIViewController, MultipeerServiceDelegate {
         // Create action on "Restart" press, disconnect multipeerService, go back to ReadyViewController
         let action = UIAlertAction(title: "Restart", style: .default, handler: { action in
             self.multipeerService?.session.disconnect()
+            //self.multipeerService?.disconnect()
             playerCount = 0
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let ivc = storyboard.instantiateViewController(withIdentifier: "IntroCollectionViewController") as! IntroCollectionViewController
