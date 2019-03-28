@@ -38,7 +38,6 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // set title
         //titleUILabel = UILabel(frame: CGRect(x: 0, y: self.view.frame.height/15, width: self.view.frame.width, height: 40))
         titleUILabel = UILabel(frame: CGRect(x: 0, y: 30, width: self.view.frame.width, height: 40))
@@ -80,12 +79,14 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
         // Prompt user to input username and start P2P communication.
         restart()
     }
     
     // Show popup for entering username, P2P servic will start when name entered.
     func restart() {
+        multipeerService = nil
         print("restart")
         // Create alert popup.
         alert = UIAlertController(title: "Enter your player name", message: nil, preferredStyle: .alert)
@@ -147,13 +148,17 @@ class IntroCollectionViewController: UICollectionViewController, MultipeerServic
             self.progressBar.setProgress(Float(playerCount)/Float(playerTotal), animated: true)
 
             // ... start once you reached a set number.
-            if playerCount == playerTotal {
-                //once the last player is ready, wait for 5 seconds and instantiate GameViewController
+//            if playerCount == playerTotal {
+            if connectedDevices.count + 1 == playerTotal {
+                print("mod: \((connectedDevices.count + 1) % playerTotal)")
+            //once the last player is ready, wait for 5 seconds and instantiate GameViewController
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController
 
                     //IMPORTANT: Pass multipeerService object down to GameViewController.
+                    self.multipeerService?.stopMatchmaking()
+                    
                     vc.multipeerService = self.multipeerService
                     vc.playerName = self.username
 
